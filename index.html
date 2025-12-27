@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GeoVision — LULC Dashboard (2015–2025)</title>
 
+  <!-- Helps relative paths work on GitHub Pages -->
+  <base href="./">
+
   <!-- Tailwind (utility CSS) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Leaflet -->
+  <!-- Leaflet for Pakistan overview -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Chart.js -->
+  <!-- Chart.js for bar charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -21,6 +24,7 @@
       --card:#071830;
       --royal-1:#0b3d91;
       --royal-2:#1e50d4;
+      --mint:#6ee7c8;
       --muted:#9bb5cc;
     }
     html,body{
@@ -47,7 +51,6 @@
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
     }
-    .logo-box img{width:44px;height:44px;object-fit:contain;}
     .navBtn{
       width:56px;height:56px;border-radius:12px;
       display:flex;align-items:center;justify-content:center;
@@ -68,7 +71,6 @@
 
     .content{flex:1;position:relative;overflow:hidden;}
 
-    /* ✅ alignment: width matches number of slides */
     .pager{
       display:flex;
       height:100%;
@@ -96,6 +98,15 @@
 
     .study-preview { margin-top:12px; border-radius:10px; overflow:hidden; background:rgba(255,255,255,0.01); padding:10px; }
     .study-preview img { width:100%; max-height:380px; object-fit:contain; border-radius:10px; box-shadow: 0 6px 18px rgba(0,0,0,0.30); }
+
+    /* Hero logo container */
+    .hero-logo{
+      width:80px;height:80px;border-radius:12px;
+      background:rgba(255,255,255,0.04);
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.05);
+    }
 
     @media (max-width:1024px){
       .navBtn{width:48px;height:48px;font-size:20px;}
@@ -127,7 +138,7 @@
       <div class="tiny">LULC Dashboard</div>
     </aside>
 
-    <!-- Content -->
+    <!-- Content (pager) -->
     <main class="content" role="main">
       <div id="pager" class="pager">
 
@@ -137,7 +148,7 @@
             <div class="card">
               <div class="flex items-start gap-4">
                 <div class="w-20">
-                  <div id="heroLogoPreview" class="w-20 h-20 rounded-lg bg-white/5 flex items-center justify-center overflow-hidden"></div>
+                  <div id="heroLogoPreview" class="hero-logo"></div>
                 </div>
                 <div>
                   <h1 class="text-2xl font-bold" style="color:var(--royal-2)">
@@ -153,7 +164,7 @@
                     <button id="toggleAuto" class="btn btn-soft" title="Pause/Resume auto-slide">⏯️ Auto</button>
                   </div>
 
-                  <p class="tiny mt-4">Tip: Maps load automatically from your GitHub repo folders.</p>
+                  <p class="tiny mt-4">Tip: Maps are loaded automatically from the GitHub repo (no uploads required).</p>
                 </div>
               </div>
             </div>
@@ -198,9 +209,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
-                <div class="study-preview mt-3"><img id="lahoreStudyImg" alt="Lahore Study Area" /></div>
 
-                <div class="lulc-row" aria-live="polite">
+                <div id="lahoreStudyPreview" class="study-preview mt-3">
+                  <img id="lahoreStudyImg" alt="Lahore Study Area" />
+                </div>
+
+                <div id="lahoreLULCRow" class="lulc-row" aria-live="polite">
                   <img id="lahoreLULC2015" alt="Lahore LULC 2015" />
                   <img id="lahoreLULC2020" alt="Lahore LULC 2020" />
                   <img id="lahoreLULC2025" alt="Lahore LULC 2025" />
@@ -230,9 +244,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
-                <div class="study-preview mt-3"><img id="mirpurStudyImg" alt="Mirpur Study Area" /></div>
 
-                <div class="lulc-row" aria-live="polite">
+                <div id="mirpurStudyPreview" class="study-preview mt-3">
+                  <img id="mirpurStudyImg" alt="Mirpur Study Area" />
+                </div>
+
+                <div id="mirpurLULCRow" class="lulc-row" aria-live="polite">
                   <img id="mirpurLULC2015" alt="Mirpur LULC 2015" />
                   <img id="mirpurLULC2020" alt="Mirpur LULC 2020" />
                   <img id="mirpurLULC2025" alt="Mirpur LULC 2025" />
@@ -262,9 +279,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
-                <div class="study-preview mt-3"><img id="islamabadStudyImg" alt="Islamabad Study Area" /></div>
 
-                <div class="lulc-row" aria-live="polite">
+                <div id="islamabadStudyPreview" class="study-preview mt-3">
+                  <img id="islamabadStudyImg" alt="Islamabad Study Area" />
+                </div>
+
+                <div id="islamabadLULCRow" class="lulc-row" aria-live="polite">
                   <img id="islamabadLULC2015" alt="Islamabad LULC 2015" />
                   <img id="islamabadLULC2020" alt="Islamabad LULC 2020" />
                   <img id="islamabadLULC2025" alt="Islamabad LULC 2025" />
@@ -294,9 +314,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
-                <div class="study-preview mt-3"><img id="malkandStudyImg" alt="Malakand Study Area" /></div>
 
-                <div class="lulc-row" aria-live="polite">
+                <div id="malkandStudyPreview" class="study-preview mt-3">
+                  <img id="malkandStudyImg" alt="Malakand Study Area" />
+                </div>
+
+                <div id="malkandLULCRow" class="lulc-row" aria-live="polite">
                   <img id="malkandLULC2015" alt="Malakand LULC 2015" />
                   <img id="malkandLULC2020" alt="Malakand LULC 2020" />
                   <img id="malkandLULC2025" alt="Malakand LULC 2025" />
@@ -317,242 +340,281 @@
   </div>
 
   <script>
-    /******************************************************************
-     * FINAL STATIC VERSION
-     * ✅ Logo embedded (works even if GitHub Pages assets 404)
-     * ✅ Study/LULC loaded from assets/img/...
-     ******************************************************************/
+  /************************************************************************
+   * FINAL VERSION
+   * - Embedded GeoVision SVG logo (always visible, no file loading)
+   * - Static maps from ./assets/img/...
+   ************************************************************************/
 
-    const NUM_SLIDES = 6;
-    const AUTO_SLIDE_MS = 30000;
-    const AUTO_RESUME_AFTER_MS = 60000;
+  const AUTO_SLIDE_MS = 30000;
+  const AUTO_RESUME_AFTER_MS = 60000;
+  const NUM_SLIDES = 6;
 
-    // ✅ your real logo embedded (no 404 ever)
-    const EMBEDDED_LOGO_PNG_DATAURI =
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAIAAABEtEjdAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAE/WlUWHRYTUw6Y29tLmFkb2Jl" +
-      "LnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJh" +
-      "ZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAg" +
-      "ICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2Ny" +
-      "aXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMu" +
-      "YWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIg" +
-      "eG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjY3RjNG" +
-      "M0E0M0YxMTFFQkI2RjY4QTY5QUM3NDNBNjAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjY3RjNGM0I0M0YxMTFFQkI2RjY4QTY5QUM3NDNB" +
-      "NjAiPgogICA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGNjdGM0YzODQzRjExMUVCQjZGNjhBNjlBQzc0M0E2" +
-      "MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGNjdGM0YzOTQzRjExMUVCQjZGNjhBNjlBQzc0M0E2MCIvPgogIDwvcmRmOkRlc2NyaXB0aW9u" +
-      "PgogPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KPD94cGFja2V0IGVuZD0iciI/Pgob2aDPAAABF0lEQVR4nO3RMQEAIAwEsJ7/0yQ0oTjQKp9mDqgF" +
-      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-      "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwGgQABj8kqvQAAAABJRU5ErkJggg==";
+  let currentSlide = 0;
+  let autoSlideTimer = null;
+  let autoSlideOn = true;
+  let resumeTimer = null;
 
-    // NOTE: The long base64 was split above to keep the editor responsive.
-    // If you want a single-line data URI, I can provide it too.
+  // Fix pager width to match slide count
+  document.getElementById('pager').style.width = (NUM_SLIDES * 100) + '%';
 
-    // --------- helper: safe img loader with fallback ----------
-    function setImgWithFallback(imgEl, candidates){
-      if(!imgEl) return;
-      let i = 0;
-      const tryNext = () => {
-        if(i >= candidates.length){
-          imgEl.style.display = 'none';
-          return;
-        }
-        imgEl.onerror = () => { i++; tryNext(); };
-        imgEl.src = candidates[i];
+  // Precomputed values
+  const cityParameterValues = {
+    lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
+    mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
+    islamabad: { years:['2015','2020','2025'], values:[7.31, 7.22, 6.82], label:'Vegetation (%)', color:'#2ecc71' },
+    malkand: { years:['2015','2020','2025'], values:[0.26, 0.27, 0.25], label:'Snow (%)', color:'#aee8ff' }
+  };
+
+  // ---- Embedded SVG Logo (icon + GeoVision text) ----
+  function geoVisionLogoSVG({compact=false} = {}){
+    // compact=true => icon only (sidebar)
+    const text = compact ? '' : `
+      <text x="50" y="86" text-anchor="middle"
+            font-family="Inter, ui-sans-serif, system-ui"
+            font-size="14" font-weight="700"
+            fill="rgba(230,247,255,0.92)" letter-spacing="0.8">
+        GeoVision
+      </text>
+    `;
+
+    return `
+      <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1e50d4"/>
+            <stop offset="100%" stop-color="#0b3d91"/>
+          </linearGradient>
+          <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6ee7c8"/>
+            <stop offset="100%" stop-color="#34d399"/>
+          </linearGradient>
+          <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.35)"/>
+          </filter>
+        </defs>
+
+        <!-- background chip -->
+        <rect x="8" y="10" width="84" height="${compact ? 80 : 88}" rx="16"
+              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)"/>
+
+        <!-- orbit -->
+        <path d="M18 48 C 30 28, 70 28, 82 48 C 70 68, 30 68, 18 48"
+              fill="none" stroke="url(#g1)" stroke-width="4" opacity="0.9"/>
+
+        <!-- globe -->
+        <circle cx="50" cy="48" r="16" fill="rgba(6,18,38,0.75)" stroke="rgba(255,255,255,0.12)" filter="url(#soft)"/>
+        <path d="M39 47 C 43 39, 51 37, 57 41 C 55 43, 53 45, 54 49 C 52 52, 47 55, 43 53 C 41 51, 40 49, 39 47Z"
+              fill="url(#mint)" opacity="0.95"/>
+        <path d="M45 35 C 46 38, 44 42, 47 44 C 50 46, 48 50, 50 52"
+              fill="none" stroke="rgba(110,231,200,0.65)" stroke-width="2"/>
+
+        <!-- leaf -->
+        <path d="M72 36 C 79 35, 84 40, 83 47 C 76 48, 71 43, 72 36Z" fill="url(#mint)"/>
+        <path d="M74 39 C 77 41, 80 43, 82 45" stroke="rgba(4,18,38,0.45)" stroke-width="2" fill="none"/>
+
+        ${text}
+      </svg>
+    `;
+  }
+
+  function injectLogos(){
+    const logoBox = document.getElementById('logoBox');
+    const hero = document.getElementById('heroLogoPreview');
+    if(logoBox) logoBox.innerHTML = geoVisionLogoSVG({compact:true});
+    if(hero) hero.innerHTML = geoVisionLogoSVG({compact:false});
+  }
+
+  // Navigation & pager
+  const pager = document.getElementById('pager');
+
+  function goToSlide(idx, triggeredByUser=false){
+    if(idx < 0) idx = 0;
+    if(idx >= NUM_SLIDES) idx = NUM_SLIDES - 1;
+    currentSlide = idx;
+    pager.style.transform = `translateX(-${idx*100}vw)`;
+    updateActiveNav();
+
+    if(triggeredByUser) pauseAutoThenResume();
+
+    if(idx >= 2 && idx <= 5){
+      const city = ['lahore','mirpur','islamabad','malkand'][idx-2];
+      renderBarForCity(city);
+    }
+    if(idx === 1 && !window.pakMapInited) initPakistanMap();
+  }
+
+  function updateActiveNav(){
+    document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));
+    const map = {0:'btnHome',1:'btnMap',2:'btnLahore',3:'btnMirpur',4:'btnIslamabad',5:'btnMalakand'};
+    if(map[currentSlide]) document.getElementById(map[currentSlide]).classList.add('active');
+  }
+
+  document.getElementById('btnHome').addEventListener('click', ()=> goToSlide(0, true));
+  document.getElementById('btnMap').addEventListener('click', ()=> goToSlide(1, true));
+  document.getElementById('btnLahore').addEventListener('click', ()=> goToSlide(2, true));
+  document.getElementById('btnMirpur').addEventListener('click', ()=> goToSlide(3, true));
+  document.getElementById('btnIslamabad').addEventListener('click', ()=> goToSlide(4, true));
+  document.getElementById('btnMalakand').addEventListener('click', ()=> goToSlide(5, true));
+  document.getElementById('enterToMap').addEventListener('click', ()=> goToSlide(1, true));
+
+  document.getElementById('toggleAuto').addEventListener('click', ()=>{
+    autoSlideOn = !autoSlideOn;
+    if(autoSlideOn) startAutoSlide(); else stopAutoSlide();
+    document.getElementById('toggleAuto').textContent = autoSlideOn ? '⏯️ Auto' : '⏸️ Auto';
+  });
+
+  function startAutoSlide(){
+    if(autoSlideTimer) clearInterval(autoSlideTimer);
+    if(!autoSlideOn) return;
+    autoSlideTimer = setInterval(()=> {
+      const next = (currentSlide + 1) % NUM_SLIDES;
+      goToSlide(next, false);
+    }, AUTO_SLIDE_MS);
+  }
+  function stopAutoSlide(){ if(autoSlideTimer){ clearInterval(autoSlideTimer); autoSlideTimer=null; } }
+  function pauseAutoThenResume(){
+    autoSlideOn = false; stopAutoSlide();
+    if(resumeTimer) clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(()=> {
+      autoSlideOn = true;
+      startAutoSlide();
+      document.getElementById('toggleAuto').textContent='⏯️ Auto';
+    }, AUTO_RESUME_AFTER_MS);
+    document.getElementById('toggleAuto').textContent='⏸️ Auto';
+  }
+
+  // Home preview map
+  (function initHomePreview(){
+    try {
+      const m = L.map('homePreviewMap', { zoomControl:false, attributionControl:false }).setView([30.5,72],5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
+      [[31.5497,74.3436],[33.1481,73.7516],[33.6844,73.0479],[34.4976,71.9722]].forEach(c =>
+        L.circleMarker(c, { radius:6, color:'#0077be', fillColor:'#0077be', fillOpacity:1 }).addTo(m)
+      );
+      window.homePreviewMap = m;
+    } catch(e){ console.warn('home preview map init failed', e); }
+  })();
+
+  // Pakistan map markers
+  function initPakistanMap(){
+    try {
+      const m = L.map('mapPakistan').setView([30.5,72],5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
+      const coords = {
+        lahore:[31.5497,74.3436],
+        mirpur:[33.1481,73.7516],
+        islamabad:[33.6844,73.0479],
+        malkand:[34.4976,71.9722]
       };
-      tryNext();
-    }
-
-    // --------- attach logo (embedded first) ----------
-    function applyLogo(){
-      const logoBox = document.getElementById('logoBox');
-      const hero = document.getElementById('heroLogoPreview');
-
-      if(logoBox){
-        logoBox.innerHTML = `<img src="${EMBEDDED_LOGO_PNG_DATAURI}" alt="GeoVision Logo">`;
-      }
-      if(hero){
-        hero.innerHTML = `<img src="${EMBEDDED_LOGO_PNG_DATAURI}" alt="GeoVision Logo" style="width:80px;height:80px;object-fit:contain;border-radius:10px">`;
-      }
-    }
-
-    // --------- load your maps from repo folders ----------
-    function applyStaticMaps(){
-      // Study maps (try png + png.png + malakand spelling)
-      setImgWithFallback(document.getElementById('lahoreStudyImg'), [
-        'assets/img/study/lahore.png','assets/img/study/lahore.png.png'
-      ]);
-      setImgWithFallback(document.getElementById('mirpurStudyImg'), [
-        'assets/img/study/mirpur.png','assets/img/study/mirpur.png.png'
-      ]);
-      setImgWithFallback(document.getElementById('islamabadStudyImg'), [
-        'assets/img/study/islamabad.png','assets/img/study/islamabad.png.png'
-      ]);
-      setImgWithFallback(document.getElementById('malkandStudyImg'), [
-        'assets/img/study/malkand.png','assets/img/study/malkand.png.png',
-        'assets/img/study/malakand.png','assets/img/study/malakand.png.png'
-      ]);
-
-      // LULC maps: prefer JPG, fallback to PNG
-      const lulc = (city, year) => ([
-        `assets/img/lulc/${city}_${year}.jpg`,
-        `assets/img/lulc/${city}_${year}.jpeg`,
-        `assets/img/lulc/${city}_${year}.png`
-      ]);
-
-      // Lahore
-      setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
-      setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
-      setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
-
-      // Mirpur
-      setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
-      setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
-      setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
-
-      // Islamabad
-      setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
-      setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
-      setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
-
-      // Malakand folder uses "malkand" in filenames (your current naming)
-      setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
-      setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
-      setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
-    }
-
-    // --------- slider + nav ----------
-    const pager = document.getElementById('pager');
-    pager.style.width = (NUM_SLIDES * 100) + '%';
-
-    let currentSlide = 0;
-    let autoSlideTimer = null;
-    let autoSlideOn = true;
-    let resumeTimer = null;
-
-    function updateActiveNav(){
-      document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));
-      const map = {0:'btnHome',1:'btnMap',2:'btnLahore',3:'btnMirpur',4:'btnIslamabad',5:'btnMalakand'};
-      if(map[currentSlide]) document.getElementById(map[currentSlide]).classList.add('active');
-    }
-
-    function goToSlide(idx, triggeredByUser=false){
-      if(idx < 0) idx = 0;
-      if(idx >= NUM_SLIDES) idx = NUM_SLIDES - 1;
-      currentSlide = idx;
-      pager.style.transform = `translateX(-${idx*100}vw)`;
-      updateActiveNav();
-
-      if(triggeredByUser) pauseAutoThenResume();
-      if(idx >= 2 && idx <= 5){
-        const city = ['lahore','mirpur','islamabad','malkand'][idx-2];
-        renderBarForCity(city);
-      }
-      if(idx === 1 && !window.pakMapInited) initPakistanMap();
-    }
-
-    document.getElementById('btnHome').addEventListener('click', ()=> goToSlide(0, true));
-    document.getElementById('btnMap').addEventListener('click', ()=> goToSlide(1, true));
-    document.getElementById('btnLahore').addEventListener('click', ()=> goToSlide(2, true));
-    document.getElementById('btnMirpur').addEventListener('click', ()=> goToSlide(3, true));
-    document.getElementById('btnIslamabad').addEventListener('click', ()=> goToSlide(4, true));
-    document.getElementById('btnMalakand').addEventListener('click', ()=> goToSlide(5, true));
-    document.getElementById('enterToMap').addEventListener('click', ()=> goToSlide(1, true));
-
-    document.getElementById('toggleAuto').addEventListener('click', ()=>{
-      autoSlideOn = !autoSlideOn;
-      if(autoSlideOn) startAutoSlide(); else stopAutoSlide();
-      document.getElementById('toggleAuto').textContent = autoSlideOn ? '⏯️ Auto' : '⏸️ Auto';
-    });
-
-    function startAutoSlide(){
-      if(autoSlideTimer) clearInterval(autoSlideTimer);
-      if(!autoSlideOn) return;
-      autoSlideTimer = setInterval(()=> {
-        const next = (currentSlide + 1) % NUM_SLIDES;
-        goToSlide(next, false);
-      }, AUTO_SLIDE_MS);
-    }
-    function stopAutoSlide(){ if(autoSlideTimer){ clearInterval(autoSlideTimer); autoSlideTimer=null; } }
-    function pauseAutoThenResume(){
-      autoSlideOn = false; stopAutoSlide();
-      if(resumeTimer) clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(()=> {
-        autoSlideOn = true;
-        startAutoSlide();
-        document.getElementById('toggleAuto').textContent='⏯️ Auto';
-      }, AUTO_RESUME_AFTER_MS);
-      document.getElementById('toggleAuto').textContent='⏸️ Auto';
-    }
-
-    // Leaflet preview map (home)
-    (function initHomePreview(){
-      try {
-        const m = L.map('homePreviewMap', { zoomControl:false, attributionControl:false }).setView([30.5,72],5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
-        [[31.5497,74.3436],[33.1481,73.7516],[33.6844,73.0479],[34.4976,71.9722]].forEach(c =>
-          L.circleMarker(c, { radius:6, color:'#0077be', fillColor:'#0077be', fillOpacity:1 }).addTo(m)
-        );
-      } catch(e){ console.warn('home preview map init failed', e); }
-    })();
-
-    // Pakistan map markers
-    function initPakistanMap(){
-      try {
-        const m = L.map('mapPakistan').setView([30.5,72],5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
-        const coords = {
-          lahore:[31.5497,74.3436],
-          mirpur:[33.1481,73.7516],
-          islamabad:[33.6844,73.0479],
-          malkand:[34.4976,71.9722]
-        };
-        Object.keys(coords).forEach(k=>{
-          const mk = L.marker(coords[k]).addTo(m).bindTooltip(k.charAt(0).toUpperCase() + k.slice(1));
-          mk.on('click', ()=> { goToSlide({lahore:2,mirpur:3,islamabad:4,malkand:5}[k], true); });
-        });
-        window.pakMapInited = true;
-      } catch(e){ console.warn('pakistan map init failed', e); }
-    }
-
-    // Charts
-    const cityParameterValues = {
-      lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
-      mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
-      islamabad: { years:['2015','2020','2025'], values:[7.31, 7.22, 6.82], label:'Vegetation (%)', color:'#2ecc71' },
-      malkand: { years:['2015','2020','2025'], values:[0.26, 0.27, 0.25], label:'Snow (%)', color:'#aee8ff' }
-    };
-    const chartInstances = {};
-    function renderBarForCity(city){
-      const cfg = cityParameterValues[city];
-      if(!cfg) return;
-      const canvasId = city + 'Bar';
-      const el = document.getElementById(canvasId);
-      if(!el) return;
-
-      if(chartInstances[canvasId]) {
-        chartInstances[canvasId].destroy();
-        chartInstances[canvasId]=null;
-      }
-      chartInstances[canvasId] = new Chart(el.getContext('2d'), {
-        type:'bar',
-        data:{ labels: cfg.years, datasets: [{ label: cfg.label, data: cfg.values, backgroundColor: cfg.color }] },
-        options:{
-          responsive:true,
-          plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => `${ctx.parsed.y} %` } } },
-          scales:{ y:{ beginAtZero:true, ticks:{ callback: v => v + ' %' } } }
-        }
+      Object.keys(coords).forEach(k=>{
+        const mk = L.marker(coords[k]).addTo(m).bindTooltip(k.charAt(0).toUpperCase() + k.slice(1));
+        mk.on('click', ()=> { goToSlide({lahore:2,mirpur:3,islamabad:4,malkand:5}[k], true); });
       });
+      window.pakMapInited = true;
+      window.pakMap = m;
+    } catch(e){ console.warn('pakistan map init failed', e); }
+  }
+
+  // ---------- STATIC ASSET LOADER (with fallback) ----------
+  function setImgWithFallback(imgEl, candidates){
+    if(!imgEl) return;
+    let i = 0;
+    const tryNext = () => {
+      if(i >= candidates.length){
+        imgEl.style.display = 'none';
+        return;
+      }
+      imgEl.onerror = () => { i++; tryNext(); };
+      imgEl.src = candidates[i];
+    };
+    tryNext();
+  }
+
+  function applyStaticAssets(){
+    // Study maps (handle png, png.png, and malakand spelling)
+    setImgWithFallback(document.getElementById('lahoreStudyImg'), [
+      './assets/img/study/lahore.png',
+      './assets/img/study/lahore.png.png'
+    ]);
+    setImgWithFallback(document.getElementById('mirpurStudyImg'), [
+      './assets/img/study/mirpur.png',
+      './assets/img/study/mirpur.png.png'
+    ]);
+    setImgWithFallback(document.getElementById('islamabadStudyImg'), [
+      './assets/img/study/islamabad.png',
+      './assets/img/study/islamabad.png.png'
+    ]);
+    setImgWithFallback(document.getElementById('malkandStudyImg'), [
+      './assets/img/study/malkand.png',
+      './assets/img/study/malkand.png.png',
+      './assets/img/study/malakand.png',
+      './assets/img/study/malakand.png.png'
+    ]);
+
+    // LULC maps (prefer JPG, fallback to PNG)
+    const lulc = (city, year) => ([
+      `./assets/img/lulc/${city}_${year}.jpg`,
+      `./assets/img/lulc/${city}_${year}.jpeg`,
+      `./assets/img/lulc/${city}_${year}.png`
+    ]);
+
+    // Lahore
+    setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
+    setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
+    setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
+
+    // Mirpur
+    setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
+    setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
+    setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
+
+    // Islamabad
+    setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
+    setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
+    setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
+
+    // Malakand (folder uses malkand in your project)
+    setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
+    setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
+    setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
+  }
+
+  // =============== Charts ===============
+  const chartInstances = {};
+  function renderBarForCity(city){
+    const cfg = cityParameterValues[city];
+    if(!cfg) return;
+    const canvasId = city + 'Bar';
+    const el = document.getElementById(canvasId);
+    if(!el) return;
+
+    if(chartInstances[canvasId]) {
+      chartInstances[canvasId].destroy();
+      chartInstances[canvasId]=null;
     }
-    ['lahore','mirpur','islamabad','malkand'].forEach(c => renderBarForCity(c));
+    chartInstances[canvasId] = new Chart(el.getContext('2d'), {
+      type:'bar',
+      data:{
+        labels: cfg.years,
+        datasets: [{ label: cfg.label, data: cfg.values, backgroundColor: cfg.color }]
+      },
+      options:{
+        responsive:true,
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => `${ctx.parsed.y} %` } } },
+        scales:{ y:{ beginAtZero:true, ticks:{ callback: v => v + ' %' } } }
+      }
+    });
+  }
 
-    function goToMap(){ goToSlide(1, true); }
+  ['lahore','mirpur','islamabad','malkand'].forEach(c => renderBarForCity(c));
+  function goToMap(){ goToSlide(1, true); }
 
-    // Start
-    applyLogo();
-    applyStaticMaps();
-    startAutoSlide();
-    goToSlide(0, false);
+  // START
+  injectLogos();        // ✅ logo always visible (SVG)
+  applyStaticAssets();  // ✅ maps from repo
+  startAutoSlide();
+  goToSlide(0, false);
   </script>
 </body>
 </html>
