@@ -115,10 +115,7 @@
   <div class="app">
     <!-- Sidebar -->
     <aside class="sidebar" role="navigation" aria-label="Main navigation">
-      <div id="logoBox" class="logo-box" title="GeoVision">
-        <!-- auto filled -->
-        GV
-      </div>
+      <div id="logoBox" class="logo-box" title="GeoVision">GV</div>
 
       <button id="btnHome" class="navBtn active" title="Home" aria-label="Home">🏠</button>
       <button id="btnMap" class="navBtn" title="Pakistan Map" aria-label="Pakistan Map">🗺️</button>
@@ -331,21 +328,24 @@
           </div>
         </section>
 
-      </div> <!-- end pager -->
+      </div>
     </main>
   </div>
 
   <script>
   /************************************************************************
-   * STATIC ASSET VERSION (GitHub Pages)
-   * - Upload buttons removed
-   * - Maps/logo are loaded from /assets/img/...
-   * - Includes smart fallback if a filename differs (png.png / malakand)
+   * FINAL STATIC ASSET VERSION (GitHub Pages)
+   * - No upload buttons
+   * - Loads logo/maps from repo assets folder
+   * - Uses repo base path to avoid broken images on Pages
    ************************************************************************/
 
   const AUTO_SLIDE_MS = 30000;
   const AUTO_RESUME_AFTER_MS = 60000;
   const NUM_SLIDES = 6;
+
+  // ✅ IMPORTANT: set this to your repo name exactly
+  const REPO_BASE = "/Geovision-dashboard";
 
   let currentSlide = 0;
   let autoSlideTimer = null;
@@ -355,7 +355,7 @@
   // ✅ Fix pager width to match slide count
   document.getElementById('pager').style.width = (NUM_SLIDES * 100) + '%';
 
-  // Precomputed image-derived percentages (2015,2020,2025)
+  // Precomputed percentages (2015,2020,2025)
   const cityParameterValues = {
     lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
     mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
@@ -363,7 +363,6 @@
     malkand: { years:['2015','2020','2025'], values:[0.26, 0.27, 0.25], label:'Snow (%)', color:'#aee8ff' }
   };
 
-  // Navigation & pager
   const pager = document.getElementById('pager');
 
   function goToSlide(idx, triggeredByUser=false){
@@ -454,7 +453,13 @@
     } catch(e){ console.warn('pakistan map init failed', e); }
   }
 
-  // ---------- STATIC ASSET LOADER (with fallback) ----------
+  // ---------- STATIC ASSET LOADER ----------
+  function withBase(path){
+    if(path.startsWith("http")) return path;
+    if(path.startsWith("/")) return `${REPO_BASE}${path}`;
+    return `${REPO_BASE}/${path}`;
+  }
+
   function setImgWithFallback(imgEl, candidates){
     if(!imgEl) return;
     let i = 0;
@@ -464,53 +469,55 @@
         return;
       }
       imgEl.onerror = () => { i++; tryNext(); };
-      imgEl.src = candidates[i];
+      imgEl.src = withBase(candidates[i]);
     };
     tryNext();
   }
 
   function applyStaticAssets(){
-    // Logo (sidebar + hero)
+    // Logo
     const logoCandidates = [
-      'assets/img/logo.png',
-      'assets/img/logo.jpg',
-      'assets/img/web logo.png'
+      "assets/img/logo.png",
+      "assets/img/logo.jpg"
     ];
-    const logoBox = document.getElementById('logoBox');
-    const hero = document.getElementById('heroLogoPreview');
+    const logoBox = document.getElementById("logoBox");
+    const hero = document.getElementById("heroLogoPreview");
 
-    // Sidebar logo
     if(logoBox){
       logoBox.innerHTML = '<img id="logoSidebarImg" alt="Logo"/>';
-      setImgWithFallback(document.getElementById('logoSidebarImg'), logoCandidates);
+      setImgWithFallback(document.getElementById("logoSidebarImg"), logoCandidates);
     }
-    // Hero logo
     if(hero){
       hero.innerHTML = '<img id="logoHeroImg" alt="Logo" style="width:80px;height:80px;object-fit:contain;border-radius:8px"/>';
-      setImgWithFallback(document.getElementById('logoHeroImg'), logoCandidates);
+      setImgWithFallback(document.getElementById("logoHeroImg"), logoCandidates);
     }
 
-    // Study maps (handle png, png.png, and malakand spelling)
-    setImgWithFallback(document.getElementById('lahoreStudyImg'), [
-      'assets/img/study/lahore.png',
-      'assets/img/study/lahore.png.png'
+    // Study maps
+    setImgWithFallback(document.getElementById("lahoreStudyImg"), [
+      "assets/img/study/lahore.png",
+      "assets/img/study/lahore.png.png",
+      "assets/img/study/lahore.jpg"
     ]);
-    setImgWithFallback(document.getElementById('mirpurStudyImg'), [
-      'assets/img/study/mirpur.png',
-      'assets/img/study/mirpur.png.png'
+    setImgWithFallback(document.getElementById("mirpurStudyImg"), [
+      "assets/img/study/mirpur.png",
+      "assets/img/study/mirpur.png.png",
+      "assets/img/study/mirpur.jpg"
     ]);
-    setImgWithFallback(document.getElementById('islamabadStudyImg'), [
-      'assets/img/study/islamabad.png',
-      'assets/img/study/islamabad.png.png'
+    setImgWithFallback(document.getElementById("islamabadStudyImg"), [
+      "assets/img/study/islamabad.png",
+      "assets/img/study/islamabad.png.png",
+      "assets/img/study/islamabad.jpg"
     ]);
-    setImgWithFallback(document.getElementById('malkandStudyImg'), [
-      'assets/img/study/malkand.png',
-      'assets/img/study/malkand.png.png',
-      'assets/img/study/malakand.png',
-      'assets/img/study/malakand.png.png'
+    setImgWithFallback(document.getElementById("malkandStudyImg"), [
+      "assets/img/study/malkand.png",
+      "assets/img/study/malkand.png.png",
+      "assets/img/study/malakand.png",
+      "assets/img/study/malakand.png.png",
+      "assets/img/study/malkand.jpg",
+      "assets/img/study/malakand.jpg"
     ]);
 
-    // LULC maps (prefer JPG, fallback to PNG)
+    // LULC maps (jpg preferred)
     const lulc = (city, year) => ([
       `assets/img/lulc/${city}_${year}.jpg`,
       `assets/img/lulc/${city}_${year}.jpeg`,
@@ -518,24 +525,24 @@
     ]);
 
     // Lahore
-    setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
-    setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
-    setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
+    setImgWithFallback(document.getElementById("lahoreLULC2015"), lulc("lahore","2015"));
+    setImgWithFallback(document.getElementById("lahoreLULC2020"), lulc("lahore","2020"));
+    setImgWithFallback(document.getElementById("lahoreLULC2025"), lulc("lahore","2025"));
 
     // Mirpur
-    setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
-    setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
-    setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
+    setImgWithFallback(document.getElementById("mirpurLULC2015"), lulc("mirpur","2015"));
+    setImgWithFallback(document.getElementById("mirpurLULC2020"), lulc("mirpur","2020"));
+    setImgWithFallback(document.getElementById("mirpurLULC2025"), lulc("mirpur","2025"));
 
     // Islamabad
-    setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
-    setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
-    setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
+    setImgWithFallback(document.getElementById("islamabadLULC2015"), lulc("islamabad","2015"));
+    setImgWithFallback(document.getElementById("islamabadLULC2020"), lulc("islamabad","2020"));
+    setImgWithFallback(document.getElementById("islamabadLULC2025"), lulc("islamabad","2025"));
 
-    // Malakand (folder uses malkand in your JS)
-    setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
-    setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
-    setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
+    // Malakand (your files use malkand_YYYY)
+    setImgWithFallback(document.getElementById("malkandLULC2015"), lulc("malkand","2015"));
+    setImgWithFallback(document.getElementById("malkandLULC2020"), lulc("malkand","2020"));
+    setImgWithFallback(document.getElementById("malkandLULC2025"), lulc("malkand","2025"));
   }
 
   // =============== Charts ===============
@@ -572,7 +579,6 @@
   applyStaticAssets();
   startAutoSlide();
   goToSlide(0, false);
-
   </script>
 </body>
 </html>
