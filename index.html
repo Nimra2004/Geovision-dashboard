@@ -69,7 +69,6 @@
 
     .content{flex:1;position:relative;overflow:hidden;}
 
-    /* ✅ Fix alignment: pager width must match slide count */
     .pager{
       display:flex;
       height:100%;
@@ -92,7 +91,6 @@
     .btn-soft{background:rgba(255,255,255,0.03);color:#e6f7ff;}
     footer { text-align:center; padding:10px 0; color:#9fb7dd; font-size:12px; opacity:0.9; }
 
-    /* LULC images row (side-by-side) */
     .lulc-row { display:flex; gap:10px; align-items:flex-start; margin-top:12px; overflow:auto; padding-bottom:6px; }
     .lulc-row img { max-height:220px; border-radius:10px; object-fit:contain; box-shadow: 0 6px 18px rgba(0,0,0,0.45); }
 
@@ -129,19 +127,17 @@
       <div class="tiny">LULC Dashboard</div>
     </aside>
 
-    <!-- Content (pager) -->
+    <!-- Content -->
     <main class="content" role="main">
       <div id="pager" class="pager">
 
-        <!-- Slide 0: Home -->
+        <!-- Slide 0 -->
         <section class="slide">
           <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
             <div class="card">
               <div class="flex items-start gap-4">
                 <div class="w-20">
-                  <div id="heroLogoPreview" class="w-20 h-20 rounded-lg bg-white/5 flex items-center justify-center text-xl text-emerald-200 overflow-hidden">
-                    GV
-                  </div>
+                  <div id="heroLogoPreview" class="w-20 h-20 rounded-lg bg-white/5 flex items-center justify-center text-xl text-emerald-200 overflow-hidden">GV</div>
                 </div>
                 <div>
                   <h1 class="text-2xl font-bold" style="color:var(--royal-2)">
@@ -170,7 +166,7 @@
           </div>
         </section>
 
-        <!-- Slide 1: Pakistan Map -->
+        <!-- Slide 1 -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -188,7 +184,7 @@
           </div>
         </section>
 
-        <!-- Slide 2: Lahore -->
+        <!-- Slide 2 -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -223,7 +219,7 @@
           </div>
         </section>
 
-        <!-- Slide 3: Mirpur -->
+        <!-- Slide 3 -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -258,7 +254,7 @@
           </div>
         </section>
 
-        <!-- Slide 4: Islamabad -->
+        <!-- Slide 4 -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -293,7 +289,7 @@
           </div>
         </section>
 
-        <!-- Slide 5: Malakand -->
+        <!-- Slide 5 -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -334,28 +330,39 @@
 
   <script>
   /************************************************************************
-   * FINAL STATIC ASSET VERSION (GitHub Pages)
-   * - No upload buttons
-   * - Loads logo/maps from repo assets folder
-   * - Uses repo base path to avoid broken images on Pages
+   * STATIC ASSET VERSION (GitHub Pages) - FIXED BASE PATH
+   * Loads from: /<repo>/assets/img/...
    ************************************************************************/
 
   const AUTO_SLIDE_MS = 30000;
   const AUTO_RESUME_AFTER_MS = 60000;
   const NUM_SLIDES = 6;
 
-  // ✅ IMPORTANT: set this to your repo name exactly
-  const REPO_BASE = "/Geovision-dashboard";
-
   let currentSlide = 0;
   let autoSlideTimer = null;
   let autoSlideOn = true;
   let resumeTimer = null;
 
-  // ✅ Fix pager width to match slide count
+  // Fix pager width
   document.getElementById('pager').style.width = (NUM_SLIDES * 100) + '%';
 
-  // Precomputed percentages (2015,2020,2025)
+  // ✅ Base path detector:
+  // - On GitHub Pages: https://username.github.io/REPO/ -> base = "/REPO/"
+  // - Else: base = "./"
+  const BASE = (() => {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    if (window.location.hostname.endsWith('github.io') && parts.length > 0) {
+      return '/' + parts[0] + '/';
+    }
+    return './';
+  })();
+
+  function asset(relPath) {
+    relPath = relPath.replace(/^\/+/, '');
+    return (BASE === './') ? relPath : (BASE + relPath);
+  }
+
+  // Precomputed chart values
   const cityParameterValues = {
     lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
     mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
@@ -433,7 +440,7 @@
     } catch(e){ console.warn('home preview map init failed', e); }
   })();
 
-  // Pakistan map markers
+  // Pakistan map
   function initPakistanMap(){
     try {
       const m = L.map('mapPakistan').setView([30.5,72],5);
@@ -453,99 +460,104 @@
     } catch(e){ console.warn('pakistan map init failed', e); }
   }
 
-  // ---------- STATIC ASSET LOADER ----------
-  function withBase(path){
-    if(path.startsWith("http")) return path;
-    if(path.startsWith("/")) return `${REPO_BASE}${path}`;
-    return `${REPO_BASE}/${path}`;
-  }
-
+  // Image loader with fallback
   function setImgWithFallback(imgEl, candidates){
     if(!imgEl) return;
     let i = 0;
-    const tryNext = () => {
-      if(i >= candidates.length){
-        imgEl.style.display = 'none';
-        return;
+    imgEl.style.display = 'block';
+    imgEl.onerror = () => {
+      i++;
+      if(i < candidates.length){
+        imgEl.src = candidates[i];
+      } else {
+        // keep GV fallback (do not hide container)
+        imgEl.removeAttribute('src');
       }
-      imgEl.onerror = () => { i++; tryNext(); };
-      imgEl.src = withBase(candidates[i]);
     };
-    tryNext();
+    imgEl.src = candidates[0];
   }
 
   function applyStaticAssets(){
-    // Logo
+    // LOGO
     const logoCandidates = [
-      "assets/img/logo.png",
-      "assets/img/logo.jpg"
+      asset('assets/img/logo.png'),
+      asset('assets/img/logo.jpg'),
+      asset('assets/img/logo.jpeg'),
+      asset('assets/img/web logo.png')
     ];
-    const logoBox = document.getElementById("logoBox");
-    const hero = document.getElementById("heroLogoPreview");
+
+    const logoBox = document.getElementById('logoBox');
+    const hero = document.getElementById('heroLogoPreview');
 
     if(logoBox){
-      logoBox.innerHTML = '<img id="logoSidebarImg" alt="Logo"/>';
-      setImgWithFallback(document.getElementById("logoSidebarImg"), logoCandidates);
+      logoBox.innerHTML = 'GV';
+      const img = document.createElement('img');
+      img.id = 'logoSidebarImg';
+      img.alt = 'Logo';
+      logoBox.innerHTML = '';
+      logoBox.appendChild(img);
+      setImgWithFallback(img, logoCandidates);
     }
+
     if(hero){
-      hero.innerHTML = '<img id="logoHeroImg" alt="Logo" style="width:80px;height:80px;object-fit:contain;border-radius:8px"/>';
-      setImgWithFallback(document.getElementById("logoHeroImg"), logoCandidates);
+      hero.innerHTML = 'GV';
+      const img = document.createElement('img');
+      img.id = 'logoHeroImg';
+      img.alt = 'Logo';
+      img.style.width = '80px';
+      img.style.height = '80px';
+      img.style.objectFit = 'contain';
+      img.style.borderRadius = '8px';
+      hero.innerHTML = '';
+      hero.appendChild(img);
+      setImgWithFallback(img, logoCandidates);
     }
 
-    // Study maps
-    setImgWithFallback(document.getElementById("lahoreStudyImg"), [
-      "assets/img/study/lahore.png",
-      "assets/img/study/lahore.png.png",
-      "assets/img/study/lahore.jpg"
+    // STUDY MAPS
+    setImgWithFallback(document.getElementById('lahoreStudyImg'), [
+      asset('assets/img/study/lahore.png'),
+      asset('assets/img/study/lahore.png.png')
     ]);
-    setImgWithFallback(document.getElementById("mirpurStudyImg"), [
-      "assets/img/study/mirpur.png",
-      "assets/img/study/mirpur.png.png",
-      "assets/img/study/mirpur.jpg"
+    setImgWithFallback(document.getElementById('mirpurStudyImg'), [
+      asset('assets/img/study/mirpur.png'),
+      asset('assets/img/study/mirpur.png.png')
     ]);
-    setImgWithFallback(document.getElementById("islamabadStudyImg"), [
-      "assets/img/study/islamabad.png",
-      "assets/img/study/islamabad.png.png",
-      "assets/img/study/islamabad.jpg"
+    setImgWithFallback(document.getElementById('islamabadStudyImg'), [
+      asset('assets/img/study/islamabad.png'),
+      asset('assets/img/study/islamabad.png.png')
     ]);
-    setImgWithFallback(document.getElementById("malkandStudyImg"), [
-      "assets/img/study/malkand.png",
-      "assets/img/study/malkand.png.png",
-      "assets/img/study/malakand.png",
-      "assets/img/study/malakand.png.png",
-      "assets/img/study/malkand.jpg",
-      "assets/img/study/malakand.jpg"
+    setImgWithFallback(document.getElementById('malkandStudyImg'), [
+      asset('assets/img/study/malkand.png'),
+      asset('assets/img/study/malkand.png.png'),
+      asset('assets/img/study/malakand.png'),
+      asset('assets/img/study/malakand.png.png')
     ]);
 
-    // LULC maps (jpg preferred)
+    // LULC helper
     const lulc = (city, year) => ([
-      `assets/img/lulc/${city}_${year}.jpg`,
-      `assets/img/lulc/${city}_${year}.jpeg`,
-      `assets/img/lulc/${city}_${year}.png`
+      asset(`assets/img/lulc/${city}_${year}.jpg`),
+      asset(`assets/img/lulc/${city}_${year}.jpeg`),
+      asset(`assets/img/lulc/${city}_${year}.png`)
     ]);
 
-    // Lahore
-    setImgWithFallback(document.getElementById("lahoreLULC2015"), lulc("lahore","2015"));
-    setImgWithFallback(document.getElementById("lahoreLULC2020"), lulc("lahore","2020"));
-    setImgWithFallback(document.getElementById("lahoreLULC2025"), lulc("lahore","2025"));
+    setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
+    setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
+    setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
 
-    // Mirpur
-    setImgWithFallback(document.getElementById("mirpurLULC2015"), lulc("mirpur","2015"));
-    setImgWithFallback(document.getElementById("mirpurLULC2020"), lulc("mirpur","2020"));
-    setImgWithFallback(document.getElementById("mirpurLULC2025"), lulc("mirpur","2025"));
+    setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
+    setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
+    setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
 
-    // Islamabad
-    setImgWithFallback(document.getElementById("islamabadLULC2015"), lulc("islamabad","2015"));
-    setImgWithFallback(document.getElementById("islamabadLULC2020"), lulc("islamabad","2020"));
-    setImgWithFallback(document.getElementById("islamabadLULC2025"), lulc("islamabad","2025"));
+    setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
+    setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
+    setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
 
-    // Malakand (your files use malkand_YYYY)
-    setImgWithFallback(document.getElementById("malkandLULC2015"), lulc("malkand","2015"));
-    setImgWithFallback(document.getElementById("malkandLULC2020"), lulc("malkand","2020"));
-    setImgWithFallback(document.getElementById("malkandLULC2025"), lulc("malkand","2025"));
+    setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
+    setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
+    setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
   }
 
-  // =============== Charts ===============
+  // Charts
   const chartInstances = {};
   function renderBarForCity(city){
     const cfg = cityParameterValues[city];
