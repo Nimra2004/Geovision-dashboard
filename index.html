@@ -5,14 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GeoVision — LULC Dashboard (2015–2025)</title>
 
-  <!-- Tailwind (utility CSS) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Leaflet for Pakistan overview -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Chart.js for bar charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -111,7 +108,6 @@
 
 <body>
   <div class="app">
-    <!-- Sidebar -->
     <aside class="sidebar" role="navigation" aria-label="Main navigation">
       <div id="logoBox" class="logo-box" title="GeoVision">GV</div>
 
@@ -127,17 +123,18 @@
       <div class="tiny">LULC Dashboard</div>
     </aside>
 
-    <!-- Content -->
     <main class="content" role="main">
       <div id="pager" class="pager">
 
-        <!-- Slide 0 -->
+        <!-- Slide 0: Home -->
         <section class="slide">
           <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
             <div class="card">
               <div class="flex items-start gap-4">
                 <div class="w-20">
-                  <div id="heroLogoPreview" class="w-20 h-20 rounded-lg bg-white/5 flex items-center justify-center text-xl text-emerald-200 overflow-hidden">GV</div>
+                  <div id="heroLogoPreview" class="w-20 h-20 rounded-lg bg-white/5 flex items-center justify-center text-xl text-emerald-200 overflow-hidden">
+                    GV
+                  </div>
                 </div>
                 <div>
                   <h1 class="text-2xl font-bold" style="color:var(--royal-2)">
@@ -166,7 +163,7 @@
           </div>
         </section>
 
-        <!-- Slide 1 -->
+        <!-- Slide 1: Pakistan Map -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -184,7 +181,7 @@
           </div>
         </section>
 
-        <!-- Slide 2 -->
+        <!-- Slide 2: Lahore -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -199,11 +196,11 @@
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
 
-                <div id="lahoreStudyPreview" class="study-preview mt-3">
+                <div class="study-preview mt-3">
                   <img id="lahoreStudyImg" alt="Lahore Study Area" />
                 </div>
 
-                <div id="lahoreLULCRow" class="lulc-row" aria-live="polite">
+                <div class="lulc-row" aria-live="polite">
                   <img id="lahoreLULC2015" alt="Lahore LULC 2015" />
                   <img id="lahoreLULC2020" alt="Lahore LULC 2020" />
                   <img id="lahoreLULC2025" alt="Lahore LULC 2025" />
@@ -219,7 +216,7 @@
           </div>
         </section>
 
-        <!-- Slide 3 -->
+        <!-- Slide 3: Mirpur -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -234,11 +231,11 @@
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
 
-                <div id="mirpurStudyPreview" class="study-preview mt-3">
+                <div class="study-preview mt-3">
                   <img id="mirpurStudyImg" alt="Mirpur Study Area" />
                 </div>
 
-                <div id="mirpurLULCRow" class="lulc-row" aria-live="polite">
+                <div class="lulc-row" aria-live="polite">
                   <img id="mirpurLULC2015" alt="Mirpur LULC 2015" />
                   <img id="mirpurLULC2020" alt="Mirpur LULC 2020" />
                   <img id="mirpurLULC2025" alt="Mirpur LULC 2025" />
@@ -254,7 +251,7 @@
           </div>
         </section>
 
-        <!-- Slide 4 -->
+        <!-- Slide 4: Islamabad -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -269,11 +266,11 @@
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
 
-                <div id="islamabadStudyPreview" class="study-preview mt-3">
+                <div class="study-preview mt-3">
                   <img id="islamabadStudyImg" alt="Islamabad Study Area" />
                 </div>
 
-                <div id="islamabadLULCRow" class="lulc-row" aria-live="polite">
+                <div class="lulc-row" aria-live="polite">
                   <img id="islamabadLULC2015" alt="Islamabad LULC 2015" />
                   <img id="islamabadLULC2020" alt="Islamabad LULC 2020" />
                   <img id="islamabadLULC2025" alt="Islamabad LULC 2025" />
@@ -289,7 +286,7 @@
           </div>
         </section>
 
-        <!-- Slide 5 -->
+        <!-- Slide 5: Malakand -->
         <section class="slide">
           <div class="max-w-7xl mx-auto">
             <div class="card mb-4 flex items-center justify-between">
@@ -304,11 +301,11 @@
               <div class="lg:col-span-2 card p-3">
                 <h4 class="tiny font-semibold">Study Area</h4>
 
-                <div id="malkandStudyPreview" class="study-preview mt-3">
+                <div class="study-preview mt-3">
                   <img id="malkandStudyImg" alt="Malakand Study Area" />
                 </div>
 
-                <div id="malkandLULCRow" class="lulc-row" aria-live="polite">
+                <div class="lulc-row" aria-live="polite">
                   <img id="malkandLULC2015" alt="Malakand LULC 2015" />
                   <img id="malkandLULC2020" alt="Malakand LULC 2020" />
                   <img id="malkandLULC2025" alt="Malakand LULC 2025" />
@@ -329,268 +326,223 @@
   </div>
 
   <script>
-  /************************************************************************
-   * STATIC ASSET VERSION (GitHub Pages) - FIXED BASE PATH
-   * Loads from: /<repo>/assets/img/...
-   ************************************************************************/
+    // ======= Base path FIX for GitHub Pages (THIS is the key) =======
+    const BASE = (() => {
+      const isGitHubPages = location.hostname.endsWith('github.io');
+      if (!isGitHubPages) return './';
+      const parts = location.pathname.split('/').filter(Boolean);
+      // On GitHub Pages project site: /<repo>/
+      return parts.length ? `/${parts[0]}/` : '/';
+    })();
 
-  const AUTO_SLIDE_MS = 30000;
-  const AUTO_RESUME_AFTER_MS = 60000;
-  const NUM_SLIDES = 6;
+    const AUTO_SLIDE_MS = 30000;
+    const AUTO_RESUME_AFTER_MS = 60000;
+    const NUM_SLIDES = 6;
 
-  let currentSlide = 0;
-  let autoSlideTimer = null;
-  let autoSlideOn = true;
-  let resumeTimer = null;
+    let currentSlide = 0;
+    let autoSlideTimer = null;
+    let autoSlideOn = true;
+    let resumeTimer = null;
 
-  // Fix pager width
-  document.getElementById('pager').style.width = (NUM_SLIDES * 100) + '%';
-
-  // ✅ Base path detector:
-  // - On GitHub Pages: https://username.github.io/REPO/ -> base = "/REPO/"
-  // - Else: base = "./"
-  const BASE = (() => {
-    const parts = window.location.pathname.split('/').filter(Boolean);
-    if (window.location.hostname.endsWith('github.io') && parts.length > 0) {
-      return '/' + parts[0] + '/';
-    }
-    return './';
-  })();
-
-  function asset(relPath) {
-    relPath = relPath.replace(/^\/+/, '');
-    return (BASE === './') ? relPath : (BASE + relPath);
-  }
-
-  // Precomputed chart values
-  const cityParameterValues = {
-    lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
-    mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
-    islamabad: { years:['2015','2020','2025'], values:[7.31, 7.22, 6.82], label:'Vegetation (%)', color:'#2ecc71' },
-    malkand: { years:['2015','2020','2025'], values:[0.26, 0.27, 0.25], label:'Snow (%)', color:'#aee8ff' }
-  };
-
-  const pager = document.getElementById('pager');
-
-  function goToSlide(idx, triggeredByUser=false){
-    if(idx < 0) idx = 0;
-    if(idx >= NUM_SLIDES) idx = NUM_SLIDES - 1;
-    currentSlide = idx;
-    pager.style.transform = `translateX(-${idx*100}vw)`;
-    updateActiveNav();
-
-    if(triggeredByUser) pauseAutoThenResume();
-
-    if(idx >= 2 && idx <= 5){
-      const city = ['lahore','mirpur','islamabad','malkand'][idx-2];
-      renderBarForCity(city);
-    }
-    if(idx === 1 && !window.pakMapInited) initPakistanMap();
-  }
-
-  function updateActiveNav(){
-    document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));
-    const map = {0:'btnHome',1:'btnMap',2:'btnLahore',3:'btnMirpur',4:'btnIslamabad',5:'btnMalakand'};
-    if(map[currentSlide]) document.getElementById(map[currentSlide]).classList.add('active');
-  }
-
-  document.getElementById('btnHome').addEventListener('click', ()=> goToSlide(0, true));
-  document.getElementById('btnMap').addEventListener('click', ()=> goToSlide(1, true));
-  document.getElementById('btnLahore').addEventListener('click', ()=> goToSlide(2, true));
-  document.getElementById('btnMirpur').addEventListener('click', ()=> goToSlide(3, true));
-  document.getElementById('btnIslamabad').addEventListener('click', ()=> goToSlide(4, true));
-  document.getElementById('btnMalakand').addEventListener('click', ()=> goToSlide(5, true));
-  document.getElementById('enterToMap').addEventListener('click', ()=> goToSlide(1, true));
-
-  document.getElementById('toggleAuto').addEventListener('click', ()=>{
-    autoSlideOn = !autoSlideOn;
-    if(autoSlideOn) startAutoSlide(); else stopAutoSlide();
-    document.getElementById('toggleAuto').textContent = autoSlideOn ? '⏯️ Auto' : '⏸️ Auto';
-  });
-
-  function startAutoSlide(){
-    if(autoSlideTimer) clearInterval(autoSlideTimer);
-    if(!autoSlideOn) return;
-    autoSlideTimer = setInterval(()=> {
-      const next = (currentSlide + 1) % NUM_SLIDES;
-      goToSlide(next, false);
-    }, AUTO_SLIDE_MS);
-  }
-  function stopAutoSlide(){ if(autoSlideTimer){ clearInterval(autoSlideTimer); autoSlideTimer=null; } }
-  function pauseAutoThenResume(){
-    autoSlideOn = false; stopAutoSlide();
-    if(resumeTimer) clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(()=> {
-      autoSlideOn = true;
-      startAutoSlide();
-      document.getElementById('toggleAuto').textContent='⏯️ Auto';
-    }, AUTO_RESUME_AFTER_MS);
-    document.getElementById('toggleAuto').textContent='⏸️ Auto';
-  }
-
-  // Home preview map
-  (function initHomePreview(){
-    try {
-      const m = L.map('homePreviewMap', { zoomControl:false, attributionControl:false }).setView([30.5,72],5);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
-      [[31.5497,74.3436],[33.1481,73.7516],[33.6844,73.0479],[34.4976,71.9722]].forEach(c =>
-        L.circleMarker(c, { radius:6, color:'#0077be', fillColor:'#0077be', fillOpacity:1 }).addTo(m)
-      );
-      window.homePreviewMap = m;
-    } catch(e){ console.warn('home preview map init failed', e); }
-  })();
-
-  // Pakistan map
-  function initPakistanMap(){
-    try {
-      const m = L.map('mapPakistan').setView([30.5,72],5);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
-      const coords = {
-        lahore:[31.5497,74.3436],
-        mirpur:[33.1481,73.7516],
-        islamabad:[33.6844,73.0479],
-        malkand:[34.4976,71.9722]
-      };
-      Object.keys(coords).forEach(k=>{
-        const mk = L.marker(coords[k]).addTo(m).bindTooltip(k.charAt(0).toUpperCase() + k.slice(1));
-        mk.on('click', ()=> { goToSlide({lahore:2,mirpur:3,islamabad:4,malkand:5}[k], true); });
-      });
-      window.pakMapInited = true;
-      window.pakMap = m;
-    } catch(e){ console.warn('pakistan map init failed', e); }
-  }
-
-  // Image loader with fallback
-  function setImgWithFallback(imgEl, candidates){
-    if(!imgEl) return;
-    let i = 0;
-    imgEl.style.display = 'block';
-    imgEl.onerror = () => {
-      i++;
-      if(i < candidates.length){
-        imgEl.src = candidates[i];
-      } else {
-        // keep GV fallback (do not hide container)
-        imgEl.removeAttribute('src');
-      }
+    const cityParameterValues = {
+      lahore: { years:['2015','2020','2025'], values:[3.57, 3.72, 4.02], label:'Built-up (%)', color:'#8a8a8a' },
+      mirpur: { years:['2015','2020','2025'], values:[5.04, 5.42, 3.76], label:'Water (%)', color:'#0077be' },
+      islamabad: { years:['2015','2020','2025'], values:[7.31, 7.22, 6.82], label:'Vegetation (%)', color:'#2ecc71' },
+      malkand: { years:['2015','2020','2025'], values:[0.26, 0.27, 0.25], label:'Snow (%)', color:'#aee8ff' }
     };
-    imgEl.src = candidates[0];
-  }
 
-  function applyStaticAssets(){
-    // LOGO
-    const logoCandidates = [
-      asset('assets/img/logo.png'),
-      asset('assets/img/logo.jpg'),
-      asset('assets/img/logo.jpeg'),
-      asset('assets/img/web logo.png')
-    ];
+    const pager = document.getElementById('pager');
+    pager.style.width = (NUM_SLIDES * 100) + '%';
 
-    const logoBox = document.getElementById('logoBox');
-    const hero = document.getElementById('heroLogoPreview');
+    function goToSlide(idx, triggeredByUser=false){
+      if(idx < 0) idx = 0;
+      if(idx >= NUM_SLIDES) idx = NUM_SLIDES - 1;
+      currentSlide = idx;
+      pager.style.transform = `translateX(-${idx*100}vw)`;
+      updateActiveNav();
 
-    if(logoBox){
-      logoBox.innerHTML = 'GV';
-      const img = document.createElement('img');
-      img.id = 'logoSidebarImg';
-      img.alt = 'Logo';
-      logoBox.innerHTML = '';
-      logoBox.appendChild(img);
-      setImgWithFallback(img, logoCandidates);
-    }
-
-    if(hero){
-      hero.innerHTML = 'GV';
-      const img = document.createElement('img');
-      img.id = 'logoHeroImg';
-      img.alt = 'Logo';
-      img.style.width = '80px';
-      img.style.height = '80px';
-      img.style.objectFit = 'contain';
-      img.style.borderRadius = '8px';
-      hero.innerHTML = '';
-      hero.appendChild(img);
-      setImgWithFallback(img, logoCandidates);
-    }
-
-    // STUDY MAPS
-    setImgWithFallback(document.getElementById('lahoreStudyImg'), [
-      asset('assets/img/study/lahore.png'),
-      asset('assets/img/study/lahore.png.png')
-    ]);
-    setImgWithFallback(document.getElementById('mirpurStudyImg'), [
-      asset('assets/img/study/mirpur.png'),
-      asset('assets/img/study/mirpur.png.png')
-    ]);
-    setImgWithFallback(document.getElementById('islamabadStudyImg'), [
-      asset('assets/img/study/islamabad.png'),
-      asset('assets/img/study/islamabad.png.png')
-    ]);
-    setImgWithFallback(document.getElementById('malkandStudyImg'), [
-      asset('assets/img/study/malkand.png'),
-      asset('assets/img/study/malkand.png.png'),
-      asset('assets/img/study/malakand.png'),
-      asset('assets/img/study/malakand.png.png')
-    ]);
-
-    // LULC helper
-    const lulc = (city, year) => ([
-      asset(`assets/img/lulc/${city}_${year}.jpg`),
-      asset(`assets/img/lulc/${city}_${year}.jpeg`),
-      asset(`assets/img/lulc/${city}_${year}.png`)
-    ]);
-
-    setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
-    setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
-    setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
-
-    setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
-    setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
-    setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
-
-    setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
-    setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
-    setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
-
-    setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
-    setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
-    setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
-  }
-
-  // Charts
-  const chartInstances = {};
-  function renderBarForCity(city){
-    const cfg = cityParameterValues[city];
-    if(!cfg) return;
-    const canvasId = city + 'Bar';
-    const el = document.getElementById(canvasId);
-    if(!el) return;
-
-    if(chartInstances[canvasId]) {
-      chartInstances[canvasId].destroy();
-      chartInstances[canvasId]=null;
-    }
-    chartInstances[canvasId] = new Chart(el.getContext('2d'), {
-      type:'bar',
-      data:{
-        labels: cfg.years,
-        datasets: [{ label: cfg.label, data: cfg.values, backgroundColor: cfg.color }]
-      },
-      options:{
-        responsive:true,
-        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => `${ctx.parsed.y} %` } } },
-        scales:{ y:{ beginAtZero:true, ticks:{ callback: v => v + ' %' } } }
+      if(triggeredByUser) pauseAutoThenResume();
+      if(idx >= 2 && idx <= 5){
+        const city = ['lahore','mirpur','islamabad','malkand'][idx-2];
+        renderBarForCity(city);
       }
+      if(idx === 1 && !window.pakMapInited) initPakistanMap();
+    }
+
+    function updateActiveNav(){
+      document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));
+      const map = {0:'btnHome',1:'btnMap',2:'btnLahore',3:'btnMirpur',4:'btnIslamabad',5:'btnMalakand'};
+      if(map[currentSlide]) document.getElementById(map[currentSlide]).classList.add('active');
+    }
+
+    document.getElementById('btnHome').addEventListener('click', ()=> goToSlide(0, true));
+    document.getElementById('btnMap').addEventListener('click', ()=> goToSlide(1, true));
+    document.getElementById('btnLahore').addEventListener('click', ()=> goToSlide(2, true));
+    document.getElementById('btnMirpur').addEventListener('click', ()=> goToSlide(3, true));
+    document.getElementById('btnIslamabad').addEventListener('click', ()=> goToSlide(4, true));
+    document.getElementById('btnMalakand').addEventListener('click', ()=> goToSlide(5, true));
+    document.getElementById('enterToMap').addEventListener('click', ()=> goToSlide(1, true));
+
+    document.getElementById('toggleAuto').addEventListener('click', ()=>{
+      autoSlideOn = !autoSlideOn;
+      if(autoSlideOn) startAutoSlide(); else stopAutoSlide();
+      document.getElementById('toggleAuto').textContent = autoSlideOn ? '⏯️ Auto' : '⏸️ Auto';
     });
-  }
 
-  ['lahore','mirpur','islamabad','malkand'].forEach(c => renderBarForCity(c));
-  function goToMap(){ goToSlide(1, true); }
+    function startAutoSlide(){
+      if(autoSlideTimer) clearInterval(autoSlideTimer);
+      if(!autoSlideOn) return;
+      autoSlideTimer = setInterval(()=> {
+        const next = (currentSlide + 1) % NUM_SLIDES;
+        goToSlide(next, false);
+      }, AUTO_SLIDE_MS);
+    }
+    function stopAutoSlide(){ if(autoSlideTimer){ clearInterval(autoSlideTimer); autoSlideTimer=null; } }
+    function pauseAutoThenResume(){
+      autoSlideOn = false; stopAutoSlide();
+      if(resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(()=> {
+        autoSlideOn = true;
+        startAutoSlide();
+        document.getElementById('toggleAuto').textContent='⏯️ Auto';
+      }, AUTO_RESUME_AFTER_MS);
+      document.getElementById('toggleAuto').textContent='⏸️ Auto';
+    }
 
-  // Start
-  applyStaticAssets();
-  startAutoSlide();
-  goToSlide(0, false);
+    (function initHomePreview(){
+      try {
+        const m = L.map('homePreviewMap', { zoomControl:false, attributionControl:false }).setView([30.5,72],5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
+        [[31.5497,74.3436],[33.1481,73.7516],[33.6844,73.0479],[34.4976,71.9722]].forEach(c =>
+          L.circleMarker(c, { radius:6, color:'#0077be', fillColor:'#0077be', fillOpacity:1 }).addTo(m)
+        );
+      } catch(e){ console.warn('home preview map init failed', e); }
+    })();
+
+    function initPakistanMap(){
+      try {
+        const m = L.map('mapPakistan').setView([30.5,72],5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(m);
+        const coords = {
+          lahore:[31.5497,74.3436],
+          mirpur:[33.1481,73.7516],
+          islamabad:[33.6844,73.0479],
+          malkand:[34.4976,71.9722]
+        };
+        Object.keys(coords).forEach(k=>{
+          const mk = L.marker(coords[k]).addTo(m).bindTooltip(k.charAt(0).toUpperCase() + k.slice(1));
+          mk.on('click', ()=> { goToSlide({lahore:2,mirpur:3,islamabad:4,malkand:5}[k], true); });
+        });
+        window.pakMapInited = true;
+      } catch(e){ console.warn('pakistan map init failed', e); }
+    }
+
+    function setImgWithFallback(imgEl, candidates){
+      if(!imgEl) return;
+      let i = 0;
+      const tryNext = () => {
+        if(i >= candidates.length){
+          imgEl.style.display = 'none';
+          return;
+        }
+        imgEl.onerror = () => { i++; tryNext(); };
+        imgEl.src = candidates[i];
+      };
+      tryNext();
+    }
+
+    function applyStaticAssets(){
+      // LOGO
+      const logoCandidates = [
+        BASE + 'assets/img/logo.png',
+        BASE + 'assets/img/logo.jpg'
+      ];
+      const logoBox = document.getElementById('logoBox');
+      const hero = document.getElementById('heroLogoPreview');
+
+      if(logoBox){
+        logoBox.innerHTML = '<img id="logoSidebarImg" alt="GeoVision Logo"/>';
+        setImgWithFallback(document.getElementById('logoSidebarImg'), logoCandidates);
+      }
+      if(hero){
+        hero.innerHTML = '<img id="logoHeroImg" alt="GeoVision Logo" style="width:80px;height:80px;object-fit:contain;border-radius:8px"/>';
+        setImgWithFallback(document.getElementById('logoHeroImg'), logoCandidates);
+      }
+
+      // STUDY MAPS (png + png.png fallback)
+      setImgWithFallback(document.getElementById('lahoreStudyImg'), [
+        BASE + 'assets/img/study/lahore.png',
+        BASE + 'assets/img/study/lahore.png.png'
+      ]);
+      setImgWithFallback(document.getElementById('mirpurStudyImg'), [
+        BASE + 'assets/img/study/mirpur.png',
+        BASE + 'assets/img/study/mirpur.png.png'
+      ]);
+      setImgWithFallback(document.getElementById('islamabadStudyImg'), [
+        BASE + 'assets/img/study/islamabad.png',
+        BASE + 'assets/img/study/islamabad.png.png'
+      ]);
+      setImgWithFallback(document.getElementById('malkandStudyImg'), [
+        BASE + 'assets/img/study/malkand.png',
+        BASE + 'assets/img/study/malkand.png.png',
+        BASE + 'assets/img/study/malakand.png',
+        BASE + 'assets/img/study/malakand.png.png'
+      ]);
+
+      // LULC MAPS (jpg -> jpeg -> png)
+      const lulc = (city, year) => ([
+        BASE + `assets/img/lulc/${city}_${year}.jpg`,
+        BASE + `assets/img/lulc/${city}_${year}.jpeg`,
+        BASE + `assets/img/lulc/${city}_${year}.png`
+      ]);
+
+      // Lahore
+      setImgWithFallback(document.getElementById('lahoreLULC2015'), lulc('lahore','2015'));
+      setImgWithFallback(document.getElementById('lahoreLULC2020'), lulc('lahore','2020'));
+      setImgWithFallback(document.getElementById('lahoreLULC2025'), lulc('lahore','2025'));
+
+      // Mirpur
+      setImgWithFallback(document.getElementById('mirpurLULC2015'), lulc('mirpur','2015'));
+      setImgWithFallback(document.getElementById('mirpurLULC2020'), lulc('mirpur','2020'));
+      setImgWithFallback(document.getElementById('mirpurLULC2025'), lulc('mirpur','2025'));
+
+      // Islamabad
+      setImgWithFallback(document.getElementById('islamabadLULC2015'), lulc('islamabad','2015'));
+      setImgWithFallback(document.getElementById('islamabadLULC2020'), lulc('islamabad','2020'));
+      setImgWithFallback(document.getElementById('islamabadLULC2025'), lulc('islamabad','2025'));
+
+      // Malakand (your code uses malkand)
+      setImgWithFallback(document.getElementById('malkandLULC2015'), lulc('malkand','2015'));
+      setImgWithFallback(document.getElementById('malkandLULC2020'), lulc('malkand','2020'));
+      setImgWithFallback(document.getElementById('malkandLULC2025'), lulc('malkand','2025'));
+    }
+
+    const chartInstances = {};
+    function renderBarForCity(city){
+      const cfg = cityParameterValues[city];
+      if(!cfg) return;
+      const canvasId = city + 'Bar';
+      const el = document.getElementById(canvasId);
+      if(!el) return;
+
+      if(chartInstances[canvasId]) chartInstances[canvasId].destroy();
+      chartInstances[canvasId] = new Chart(el.getContext('2d'), {
+        type:'bar',
+        data:{ labels: cfg.years, datasets: [{ label: cfg.label, data: cfg.values, backgroundColor: cfg.color }] },
+        options:{
+          responsive:true,
+          plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => `${ctx.parsed.y} %` } } },
+          scales:{ y:{ beginAtZero:true, ticks:{ callback: v => v + ' %' } } }
+        }
+      });
+    }
+
+    ['lahore','mirpur','islamabad','malkand'].forEach(c => renderBarForCity(c));
+    function goToMap(){ goToSlide(1, true); }
+
+    applyStaticAssets();
+    startAutoSlide();
+    goToSlide(0, false);
   </script>
 </body>
 </html>
